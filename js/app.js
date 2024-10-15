@@ -42,10 +42,7 @@ function createProduct(data){
     });
 }
 
-btn.addEventListener("click", ()=>{
-    offset++
-    getData("products", offset)
-})
+
 
 
 
@@ -67,6 +64,7 @@ async function getCategory(endpoint){
 }
 getCategory("products/category-list")
 
+let categoryType = "products"
 function createCategory(data){
     data.forEach(item => {
         const liEl = document.createElement("li")
@@ -77,13 +75,19 @@ function createCategory(data){
         dataEl.setAttribute("value", `/category/${item}`)
 
         dataEl.addEventListener("click", (e) => {
-            getData(`products${e.target.value}`, offset)
+            categoryType = "products/" +e.target.value
+            getData(categoryType, offset)
         })
 
         liEl.appendChild(dataEl)
         category.appendChild(liEl)
     });
 }
+
+btn.addEventListener("click", ()=>{
+    offset++
+    getData(categoryType, offset)
+})
 
 All.addEventListener("click", ()=>{
     if (All.getAttribute('value') === "") {
